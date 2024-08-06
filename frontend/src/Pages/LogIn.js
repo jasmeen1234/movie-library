@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest, loginSuccess, loginFailure } from "../Redux/AuthReducer/authAction";
+import Header from "../Components/Header";
 
 const LogIn = () => {
   const [username, usernameupdate] = useState('');
@@ -68,7 +69,12 @@ console.log(isLoading,isError,isAuth);
   };
 
   return (
+    <div>
+      <div>
+        <Header/>
+      </div>
     <div className="flex justify-center items-center min-h-screen">
+      
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold text-center">User Login</h2>
         <form onSubmit={ProceedLogin} className="space-y-4">
@@ -102,6 +108,7 @@ console.log(isLoading,isError,isAuth);
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };
