@@ -3,17 +3,17 @@ import {thunk} from 'redux-thunk'; // Correct import for redux-thunk
 
 import {authReducer} from './AuthReducer/reducer';
 // import movieReducer from './MovieReducer/MovieReducer'; // Adjust path as per your structure
-import filterReducer from './MovieReducer/filterReducer'; // Adjust path as per your structure
-import rootReducer from './MovieReducer/rootReducer';
-import moviesReducer from './MovieReducer/movieReducer';
+import filterReducer from './Reducer/filterReducer'; // Adjust path as per your structure
+// import rootReducer from './Reducer/rootReducer';
+import movieReducer from './Reducer/movieReducer';
 // Combine the reducers into one root reducer
-const rootReducer1 = combineReducers({
+const rootReducer = combineReducers({
   auth: authReducer,
-  movies: rootReducer, // Renamed to match your previous structure
+  movies: movieReducer, // Renamed to match your previous structure
   filters: filterReducer, // New reducer for filtering
 });
 
 // Create the store with the combined reducer and apply middleware
-const store = createStore(rootReducer1, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;

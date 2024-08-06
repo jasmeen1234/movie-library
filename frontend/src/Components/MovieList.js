@@ -3,11 +3,9 @@ import { useSelector } from 'react-redux';
 import MovieCard from './MovieCard';
 
 const MovieList = () => {
-  const { movies, isLoading, isError } = useSelector((state) => state.movie);
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching movies</div>;
-
+   const state = useSelector((state) => state);
+    console.log(state); // check what state contains
+    const { movies = [] } = state.movies || {};
   return (
     <div className="movie-list">
       {movies.map((movie) => (

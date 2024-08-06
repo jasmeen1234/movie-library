@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFilters } from '../Redux/MovieReducer/action'; // Assuming you have this action defined
+import { updateFilters } from '../Redux/Reducer/action'; // Assuming you have this action defined
 
 const Sidebar = () => {
   const location = useLocation();
