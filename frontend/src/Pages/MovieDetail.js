@@ -1,14 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { movies as movieData } from "../data"; // Ensure this path is correct
 import { motion } from 'framer-motion';
 
 const MovieDetail = () => {
+  const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const { ratings = [], order = '' } = useSelector((state) => state.filters);
 
   useEffect(() => {
-    let filtered = movieData || []; // Default to empty array if movieData is undefined
+    // Fetch data from the JSON server
+    const fetchMovies = async () => {
+      try {
+        const response = await fetch('https://json-server-2-b8hk.onrender.com/movies');
+        if (response.ok) {
+          const data = await response.json();
+          setMovies(data);
+        } else {
+          console.error('Failed to fetch movies:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
+
+  useEffect(() => {
+    let filtered = movies || []; // Default to empty array if movies is undefined
 
     // Filter by rating
     if (ratings.length > 0) {
@@ -23,7 +42,7 @@ const MovieDetail = () => {
     }
 
     setFilteredMovies(filtered);
-  }, [ratings, order]);
+  }, [ratings, order, movies]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 xl:gap-10 p-4">
