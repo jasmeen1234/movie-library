@@ -1,17 +1,16 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  const location = useLocation();
+const ProtectedRoute = ({ element }) => {
+  const { isAuth } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   if (!isAuth) {
-    // Redirect to login page with the intended path stored in state
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    navigate('/login');
+    return null;
   }
 
-  return children;
+  return element;
 };
 
 export default ProtectedRoute;

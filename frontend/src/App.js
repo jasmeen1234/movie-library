@@ -1,28 +1,31 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import store from './Redux/store';
-import MainRoutes from './Pages/MainRoutes';
-import MovieDetail from './Pages/MovieDetail';
-import Header from './Components/Header';
-import { BrowserRouter,Route,Routes } from 'react-router-dom';
-import HomePage from './Pages/HomePage';
-import LogIn from './Pages/LogIn';
+import { BrowserRouter as Router, Routes, Route, Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import LogIn from "./Pages/LogIn";
+import HomePage from "./Pages/HomePage";
+// import MovieDetails from "./MovieDetails";
+// import Register from "./Register";
+
+const ProtectedRoute = ({ element }) => {
+  const { isAuth } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  if (!isAuth) {
+    navigate('/login');
+    return null;
+  }
+  return element;
+};
+
 const App = () => {
   return (
-    <div className=" font-bodyFont bg-gray-100">
-    <BrowserRouter>
-
-    {/* // <Provider store={store}>
-    //   <MainRoutes />
-    // </Provider> */}
-    <Routes>
-    <Route path='/' element={<HomePage/>}/>
-    <Route path='/login' element={<LogIn/>}/>
-    </Routes> 
-    {/* <MovieDetail/> */}
-   
-    </BrowserRouter>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<LogIn />} />
+        {/* <Route path="/register" element={<Register />} /> */}
+        <Route path="/" element={<HomePage />}  />
+        {/* <Route path="/movie/:id" element={<ProtectedRoute element={<MovieDetails />} />} /> */}
+      </Routes>
+    </Router>
   );
 };
 

@@ -1,7 +1,3 @@
-// actionTypes.js
-
-
-// authActions.js
 import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST } from "./actionTypes";
 
 export const loginRequest = () => ({
