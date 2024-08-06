@@ -48,24 +48,24 @@ const Sidebar = () => {
   }, [selectedRatings, sortOrder, navigate, dispatch]);
 
   return (
-    <div className="sidebar">
-      <h2>Filter by Rating</h2>
+    <div className="sidebar p-4 bg-gray-200">
+      <h2 className="font-bold mb-2">Filter by Rating</h2>
       {[1, 2, 3, 4, 5].map((rating) => (
-        <div key={rating}>
+        <div key={rating} className="mb-2">
           <input
             type="checkbox"
             id={`rating-${rating}`}
             checked={selectedRatings.includes(rating)}
             onChange={() => handleRatingChange(rating)}
           />
-          <label htmlFor={`rating-${rating}`}>
+          <label htmlFor={`rating-${rating}`} className="ml-2">
             {'★'.repeat(rating)}{'☆'.repeat(5 - rating)}
           </label>
         </div>
       ))}
 
-      <h2>Sort By Year</h2>
-      <div>
+      <h2 className="font-bold mb-2">Sort By Year</h2>
+      <div className="mb-2">
         <input
           type="radio"
           id="ascending"
@@ -74,7 +74,7 @@ const Sidebar = () => {
           checked={sortOrder === 'asc'}
           onChange={() => handleSortChange('asc')}
         />
-        <label htmlFor="ascending">Ascending</label>
+        <label htmlFor="ascending" className="ml-2">Ascending</label>
       </div>
       <div>
         <input
@@ -85,7 +85,7 @@ const Sidebar = () => {
           checked={sortOrder === 'desc'}
           onChange={() => handleSortChange('desc')}
         />
-        <label htmlFor="descending">Descending</label>
+        <label htmlFor="descending" className="ml-2">Descending</label>
       </div>
     </div>
   );

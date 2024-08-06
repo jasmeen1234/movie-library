@@ -1,15 +1,17 @@
-import React from 'react'
+// src/Components/Header.js
+import React from 'react';
 
-function Header() {
+const Header = () => {
   return (
-    <div className="w-full sticky top-0 z-50">
-         <div className="w-full bg-amazon_blue text-white px-4 py-3 flex items-center gap-4">
-      <h1>Movie</h1>
-      <h1>Home</h1>
-      <h1>Login</h1>
+    <div className="sticky top-0 z-50 bg-blue-400 flex text-white p-4  shadow-md">
+     
+      <div className="mt-2">
+      <h1 className="text-3xl font-bold">Movie Library</h1>
+        <a href="/home" className="text-white mr-4">Home</a>
+        <a href="/login" className="text-white">Login</a>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

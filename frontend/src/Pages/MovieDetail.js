@@ -1,37 +1,54 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { movies } from "../data";
-import { motion } from 'framer-motion'
-// import movies from "../data"; // Assuming movies data is in this file
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { movies as movieData } from "../data"; // Ensure this path is correct
+import { motion } from 'framer-motion';
 
 const MovieDetail = () => {
-  //   const id = useParams();
-  //   const movie = movies.find((movie) => movie.id === Number(id));
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const { ratings = [], order = '' } = useSelector((state) => state.filters);
 
-  //   console.log(movie);
-  //   console.log(id);
-  //   if (!movie) {
-  //     return <p>Movie not found</p>;
-  //   }
-  // const arr=movies
-  console.log("movies", movies);
+  useEffect(() => {
+    let filtered = movieData || []; // Default to empty array if movieData is undefined
+
+    // Filter by rating
+    if (ratings.length > 0) {
+      filtered = filtered.filter((movie) => ratings.includes(Math.round(movie.rating)));
+    }
+
+    // Sort by year
+    if (order === 'asc') {
+      filtered.sort((a, b) => a.Year - b.Year);
+    } else if (order === 'desc') {
+      filtered.sort((a, b) => b.Year - a.Year);
+    }
+
+    setFilteredMovies(filtered);
+  }, [ratings, order]);
 
   return (
-   
-   <div className="max-w-screen-2xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4  gap-5 xl:gap-10 px-4 mx-auto">
-      {movies &&
-        movies.map((item, i) => (
-          <div  className="bg-white h-auto border-[1px] border-gray-200 py-8 z-30 hover:border-transparent
-          shadow-none hover:shadow-testShadow duration-200 relative flex flex-col gap-4">
-            <h3 className="movie-id">Movie ID: {item.id}</h3>
-            <img className="movie-image" src={item.Poster} alt={item.Title} />
-            <h1 className="movie-name">{item.Title}</h1>
-            <p className="movie-year">Year: {item.Year}</p>
-            <p className="movie-type">Type: {item.Type}</p>
-            <p className="movie-rating">Rating: {item.rating}</p>
-          </div>
-        ))}
-   </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 xl:gap-10 p-4">
+      {filteredMovies.length > 0 ? (
+        filteredMovies.map((item) => (
+          <motion.div
+            key={item.id}
+            className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            whileHover={{ scale: 1.05 }}
+          >
+            <img className="w-full h-60 object-cover" src={item.Poster} alt={item.Title} />
+            <div className="p-4 flex flex-col gap-2">
+              <h2 className="text-xl font-bold">{item.Title}</h2>
+              <p className="text-gray-600">Year: {item.Year}</p>
+              <p className="text-gray-600">Type: {item.Type}</p>
+              <p className="text-yellow-500">
+                {"★".repeat(Math.round(item.rating))}
+              </p>
+            </div>
+          </motion.div>
+        ))
+      ) : (
+        <p>No movies found.</p>
+      )}
+    </div>
   );
 };
 

@@ -1,15 +1,19 @@
+// src/Pages/HomePage.js
 import React from 'react';
 import Sidebar from '../Components/Sidebar';
-import MovieList from '../Components/MovieList';
 import MovieDetail from './MovieDetail';
+import Header from '../Components/Header';
 
 const HomePage = () => {
   return (
-    <div className="home-page">
-      <Sidebar />
-      <MovieList />
-      <MovieDetail/>
-      
+    <div className="min-h-screen bg-gray-300">
+      <Header />
+      <div className="flex p-1">
+        <Sidebar />
+        <div className="flex-1 p-4">
+          <MovieDetail />
+        </div>
+      </div>
     </div>
   );
 };
