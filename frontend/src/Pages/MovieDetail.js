@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { motion } from 'framer-motion';
 
-const MovieDetail = () => {
+const MovieDetail = ({ order, starRatings }) => {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const { ratings = [], order = '' } = useSelector((state) => state.filters);
 
   useEffect(() => {
     // Fetch data from the JSON server
@@ -15,6 +13,7 @@ const MovieDetail = () => {
         if (response.ok) {
           const data = await response.json();
           setMovies(data);
+          setFilteredMovies(data); // Initially set filteredMovies to all movies
         } else {
           console.error('Failed to fetch movies:', response.statusText);
         }
@@ -27,22 +26,22 @@ const MovieDetail = () => {
   }, []);
 
   useEffect(() => {
-    let filtered = movies || []; // Default to empty array if movies is undefined
+    let updatedMovies = [...movies];
 
-    // Filter by rating
-    if (ratings.length > 0) {
-      filtered = filtered.filter((movie) => ratings.includes(Math.round(movie.rating)));
+    // Filter by star ratings if any are selected
+    if (starRatings.length !== 0) {
+      updatedMovies = updatedMovies.filter(movie => starRatings.includes(movie.rating));
     }
 
-    // Sort by year
+    // Sort by year if order is specified
     if (order === 'asc') {
-      filtered.sort((a, b) => a.Year - b.Year);
+      updatedMovies.sort((a, b) => parseInt(a.Year) - parseInt(b.Year));
     } else if (order === 'desc') {
-      filtered.sort((a, b) => b.Year - a.Year);
+      updatedMovies.sort((a, b) => parseInt(b.Year) - parseInt(a.Year));
     }
 
-    setFilteredMovies(filtered);
-  }, [ratings, order, movies]);
+    setFilteredMovies(updatedMovies);
+  }, [order, starRatings, movies]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 xl:gap-10 p-4">
