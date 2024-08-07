@@ -8,6 +8,10 @@ Setup Instructions
 Login Functionality
 Movie List Sidebar
 Movie Detail Page
+
+https://github.com/user-attachments/assets/9f0435de-1c97-4591-b777-5d36832fe7e4
+
+
 Overview
 The Movie Library Project is a web application built with React, TypeScript, and Redux that allows users to browse and filter a collection of movies. The application supports user authentication using the reqres.in API and provides a dynamic user interface for viewing movie details, sorting, and filtering movies.
 
