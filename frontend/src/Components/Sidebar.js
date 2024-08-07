@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFilters } from '../Redux/Reducer/action'; // Assuming you have this action defined
 
-const Sidebar = () => {
+const Sidebar = ({order,setOrder,setStarRatings}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,11 +15,16 @@ const Sidebar = () => {
     const newSelectedRatings = selectedRatings.includes(rating)
       ? selectedRatings.filter((r) => r !== rating)
       : [...selectedRatings, rating];
+      console.log(newSelectedRatings)
+      setStarRatings(newSelectedRatings);
     setSelectedRatings(newSelectedRatings);
   };
 
   const handleSortChange = (order) => {
-    setSortOrder(order);
+     setOrder(order)
+    // setSortOrder(order);
+    
+
   };
 
   useEffect(() => {
@@ -71,7 +76,7 @@ const Sidebar = () => {
           id="ascending"
           name="sortOrder"
           value="asc"
-          checked={sortOrder === 'asc'}
+          checked={order === 'asc'}
           onChange={() => handleSortChange('asc')}
         />
         <label htmlFor="ascending" className="ml-2">Ascending</label>
@@ -82,7 +87,7 @@ const Sidebar = () => {
           id="descending"
           name="sortOrder"
           value="desc"
-          checked={sortOrder === 'desc'}
+          checked={order==="desc"}
           onChange={() => handleSortChange('desc')}
         />
         <label htmlFor="descending" className="ml-2">Descending</label>
