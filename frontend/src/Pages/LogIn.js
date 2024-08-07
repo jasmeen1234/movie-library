@@ -51,6 +51,9 @@ const LogIn = () => {
           toast.error('Invalid credentials');
           setMessage(`Error: ${data.error}`);
           dispatch(loginFailure('Invalid credentials'));
+
+          // Show correct credentials as a toast message
+          alert('Use email: eve.holt@reqres.in and password: cityslicka for successful login.');
         }
       } catch (error) {
         toast.error(`Login Failed due to: ${error.message}`);
@@ -106,6 +109,7 @@ const LogIn = () => {
             </button>
           </div>
         </form>
+        {message && <div className="mt-4 text-center text-red-500">{message}</div>}
       </div>
     </div>
   );
